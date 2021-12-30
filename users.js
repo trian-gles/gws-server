@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 // { username, ip, port, outgoing challenges, incoming challenges }
-var users = [{username: "fatcow", ip: "127.0.0.1", port: 8001, isOnline: false, outChallenges: [], inChallenges:[]}];
+var users = [{username: "fatcow", ip: "127.0.0.1", port: 8001, isOnline: false, inMatch: false, outChallenges: [], inChallenges:[]}];
 
 module.exports = router;
 
@@ -39,6 +39,7 @@ router.post('/', (req, res) =>{
             ip: req.ip,
             port: req.body.port,
             isOnline: true,
+            inMatch: false,
             outChallenges: [],
             inChallenges: []
         });
@@ -59,5 +60,38 @@ router.delete('/:username', (req, res) => {
     // if we didn't find a user with that username
     res.status(404);
     res.json({message: "Not Found"});
+    
+});
+
+router.put('/:username', (req, res) => {
+    for (let i = 0; i < users.length; i++)
+    {
+        if (users[i].username == req.params.username){
+            
+            users[i] = {
+                username: req.params.username,
+                ip: req.ip,
+                port: req.body.port,
+                isOnline: req.body.isOnline,
+                inMatch: req.body.inMatch,
+                outChallenges: req.body.outChallenges,
+                inChallenges: req.body.inChallenges
+            }
+            return;
+        }
+    }
+    // if we didn't find a user with that username
+    users.push(
+        {
+            username: req.params.username,
+            ip: req.ip,
+            port: req.body.port,
+            isOnline: req.body.isOnline,
+            inMatch: req.body.inMatch,
+            outChallenges: req.body.outChallenges,
+            inChallenges: req.body.inChallenges
+        });
+
+    res.json({message: `New user ${username} created`});
     
 });
