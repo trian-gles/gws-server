@@ -10,3 +10,7 @@ $body = @{
     "port"=1234
    } | ConvertTo-Json
 Invoke-WebRequest -UseBasicParsing -Uri "http://localhost:3000/users" -ContentType "application/json" -Method POST -Body $body
+Write-Output "Deleting user"
+Invoke-WebRequest -Method Delete -Uri "http://localhost:3000/users/fatcow"
+Write-Output "Getting all users"
+Invoke-WebRequest -Method Get -Uri "http://localhost:3000/users"

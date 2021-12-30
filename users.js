@@ -45,3 +45,19 @@ router.post('/', (req, res) =>{
 
     res.json({message: `New user ${username} created`});
 });
+
+router.delete('/:username', (req, res) => {
+    for (let i = 0; i < users.length; i++)
+    {
+        if (users[i].username == req.params.username){
+            users.splice(i, 1);
+            res.json({message: `Successfully deleted user ${req.params.username}`});
+            
+            return;
+        }
+    }
+    // if we didn't find a user with that username
+    res.status(404);
+    res.json({message: "Not Found"});
+    
+});
