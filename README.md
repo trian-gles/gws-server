@@ -1,7 +1,7 @@
 # gws-server
 A REST API server for facilitating matchmaking in the game Girls With Swords.  Allows creation, modification and deletion of users.
 
-## setup
+## Setup
 First time usage:
 `npm install`
 
